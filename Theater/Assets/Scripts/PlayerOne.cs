@@ -22,7 +22,7 @@ public class PlayerOne : MonoBehaviour
     public int health = 100;
     [SerializeField] int damage;
     [SerializeField] Transform swordPos;
-    private float attackWaitTime = 1;
+    private float attackWaitTime = .8f;
 
     void Start()
     {
@@ -73,7 +73,7 @@ public class PlayerOne : MonoBehaviour
     void attack() {
         GameObject tempSword = Instantiate(sword,swordPos);
         Destroy(tempSword, .5f);
-        attackWaitTime = 1f;
+        attackWaitTime = .8f;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
