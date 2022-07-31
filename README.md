@@ -1,2 +1,2 @@
 # EdgeOfYourSeats
-made for Multiplayer Game Jam
+made for the [Multiplayer Game Jam](https://itch.io/jam/multiplayer).
