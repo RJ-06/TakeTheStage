@@ -25,6 +25,9 @@ public class PlayerOne : MonoBehaviour
     [SerializeField] float attackWaitTime = .6f;
     public bool guarding;
 
+    private float healTime = 3f;
+    private float healTimer = 0;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,8 +48,13 @@ public class PlayerOne : MonoBehaviour
             attack();
         }
         attackWaitTime -= Time.deltaTime;
+        
 
         guarding = Input.GetKey(KeyCode.S) && isGrounded;
+        healTimer += Time.deltaTime;
+        if (healTimer > healTime && health < 100) {
+            health++;
+        }
 
     }
 
@@ -91,7 +99,8 @@ public class PlayerOne : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("p2Sword") && !guarding) {
-            health -= damage;   
+            health -= damage;
+            healTimer = 0;
         }
     }
 }
