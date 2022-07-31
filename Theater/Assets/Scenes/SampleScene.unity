@@ -409,11 +409,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 8
+  jumpForce: 10
   jumpChange: 0.4
   rb: {fileID: 1994595827}
   groundCheck: {fileID: 1054290545}
-  checkRadius: 0.4
+  checkRadius: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -421,6 +421,8 @@ MonoBehaviour:
   health: 100
   damage: 5
   swordPos: {fileID: 137989536}
+  attackWaitTime: 0.8
+  guarding: 0
 --- !u!50 &1994595827
 Rigidbody2D:
   serializedVersion: 4
@@ -436,7 +438,7 @@ Rigidbody2D:
   m_Mass: 1.6175523
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.25
+  m_GravityScale: 1.45
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

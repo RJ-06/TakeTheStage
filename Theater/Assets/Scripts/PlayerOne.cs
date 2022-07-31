@@ -22,7 +22,8 @@ public class PlayerOne : MonoBehaviour
     public int health = 100;
     [SerializeField] int damage;
     [SerializeField] Transform swordPos;
-    private float attackWaitTime = .8f;
+    [SerializeField] float attackWaitTime = .6f;
+    public bool guarding;
 
     void Start()
     {
@@ -35,15 +36,18 @@ public class PlayerOne : MonoBehaviour
         {
             rb.velocity = Vector2.up * jumpForce;
         }
-        if (Input.GetKeyUp(KeyCode.W) && !isGrounded)
+        if (Input.GetKeyUp(KeyCode.W))
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpChange);
         }
 
-        if (Input.GetKeyDown(KeyCode.V) && attackWaitTime < 0) {
+        if (Input.GetKeyDown(KeyCode.V) && attackWaitTime < 0 && !guarding) {
             attack();
         }
         attackWaitTime -= Time.deltaTime;
+
+        guarding = Input.GetKey(KeyCode.S) && isGrounded;
+
     }
 
 
@@ -53,7 +57,15 @@ public class PlayerOne : MonoBehaviour
         //checks if you're touching the ground
 
         float moveInput = Input.GetAxisRaw("p1Horizontal");
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+
+        if (!guarding)
+        {
+            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        }
+        else {
+            rb.velocity = Vector2.zero;
+        }
+
 
         if ((facingRight == false && moveInput > 0) || (facingRight == true && moveInput < 0))
         {
@@ -72,13 +84,13 @@ public class PlayerOne : MonoBehaviour
 
     void attack() {
         GameObject tempSword = Instantiate(sword,swordPos);
-        Destroy(tempSword, .5f);
-        attackWaitTime = .8f;
+        Destroy(tempSword, .3f);
+        attackWaitTime = .6f;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("p2Sword")) {
+        if (col.gameObject.CompareTag("p2Sword") && !guarding) {
             health -= damage;   
         }
     }
