@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerOne : MonoBehaviour
+public class PlayerTwo : MonoBehaviour
 {
     //movement
     [SerializeField] float moveSpeed;
@@ -35,24 +35,26 @@ public class PlayerOne : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.velocity = Vector2.up * jumpForce;
         }
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.UpArrow))
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpChange);
         }
 
-        if (Input.GetKeyDown(KeyCode.V) && attackWaitTime < 0 && !guarding) {
+        if (Input.GetKeyDown(KeyCode.Period) && attackWaitTime < 0 && !guarding)
+        {
             attack();
         }
         attackWaitTime -= Time.deltaTime;
-        
 
-        guarding = Input.GetKey(KeyCode.S) && isGrounded;
+
+        guarding = Input.GetKey(KeyCode.DownArrow) && isGrounded;
         healTimer += Time.deltaTime;
-        if (healTimer > healTime && health < 100) {
+        if (healTimer > healTime && health < 100)
+        {
             health++;
         }
 
@@ -64,13 +66,14 @@ public class PlayerOne : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
         //checks if you're touching the ground
 
-        float moveInput = Input.GetAxisRaw("p1Horizontal");
+        float moveInput = Input.GetAxisRaw("p2Horizontal");
 
         if (!guarding)
         {
             rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
         }
-        else {
+        else
+        {
             rb.velocity = Vector2.zero;
         }
 
@@ -83,22 +86,25 @@ public class PlayerOne : MonoBehaviour
     }
 
 
-    void flip() {
+    void flip()
+    {
         facingRight = !facingRight;
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale = Scaler;
     }
 
-    void attack() {
-        GameObject tempSword = Instantiate(sword,swordPos);
+    void attack()
+    {
+        GameObject tempSword = Instantiate(sword, swordPos);
         Destroy(tempSword, .3f);
         attackWaitTime = .45f;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("p2Sword") && !guarding) {
+        if (col.gameObject.CompareTag("p1Sword") && !guarding)
+        {
             health -= damage;
             healTimer = 0;
         }
