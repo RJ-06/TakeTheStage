@@ -19,8 +19,7 @@ public class PlayerTwo : MonoBehaviour
 
     //attack and combat
     public GameObject sword;
-    public int health = 100;
-    [SerializeField] int damage;
+    public static int health = 100;
     [SerializeField] Transform swordPos;
     [SerializeField] float attackWaitTime = .45f;
     public bool guarding;
@@ -35,6 +34,8 @@ public class PlayerTwo : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(health);
+
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.velocity = Vector2.up * jumpForce;
@@ -55,7 +56,7 @@ public class PlayerTwo : MonoBehaviour
         healTimer += Time.deltaTime;
         if (healTimer > healTime && health < 100)
         {
-            health++;
+            health += (int)Time.deltaTime*7;
         }
 
     }
@@ -101,12 +102,14 @@ public class PlayerTwo : MonoBehaviour
         attackWaitTime = .45f;
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("p1Sword") && !guarding)
+        if (col.gameObject.tag == "p1Sword")
         {
-            health -= damage;
-            healTimer = 0;
+            health -= 10;
+            healTime = 0;
         }
     }
+
 }
