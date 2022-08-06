@@ -220,4 +220,4 @@ MonoBehaviour:
   swordPos: {fileID: 2634884051266026791}
   attackWaitTime: 0.45
   guarding: 0
-  healTime: 5
+  healTime: 3

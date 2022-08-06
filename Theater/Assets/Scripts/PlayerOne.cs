@@ -8,7 +8,7 @@ public class PlayerOne : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpForce;
     [SerializeField] float jumpChange;
-    [SerializeField] Rigidbody2D rb;
+    public Rigidbody2D rb;
     private bool facingRight = true;
 
     //groundcheck
@@ -101,7 +101,16 @@ public class PlayerOne : MonoBehaviour
         {
             health -= 10;
             healTime = 0;
+            ExcitementBar.excitementVal += 7;
+
+            if (rb.velocity.y < -7) {
+                ExcitementBar.excitementVal += 25;
+            }
+
+            rb.AddForce(new Vector2(4500 * Mathf.Sign(this.transform.position.x - col.transform.position.x), 350));
         }
+
+        
     }
 
 }
