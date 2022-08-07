@@ -23,7 +23,7 @@ public class PlayerOne : MonoBehaviour
     [SerializeField] Transform swordPos;
     [SerializeField] float attackWaitTime = .4f;
     public bool guarding;
-
+    [SerializeField] GameObject shield;
 
     public Animator animator;
 
@@ -51,6 +51,8 @@ public class PlayerOne : MonoBehaviour
         
 
         guarding = Input.GetKey(KeyCode.S) && isGrounded;
+
+        shield.SetActive(guarding);
 
         if (health < 0)
             health = 0;

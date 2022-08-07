@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ExcitementBar : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class ExcitementBar : MonoBehaviour
     [SerializeField] float maxVal;
 
     [SerializeField] float interestDecrease;
-    public float gameTime = 83;
+    public float gameTime = 84;
 
     public static float timer = 0;
 
@@ -29,6 +30,12 @@ public class ExcitementBar : MonoBehaviour
             excitementVal = maxVal;
         if (excitementVal < 0)
             excitementVal = 0;
+
+        if (timer <= 0)
+            finalEval();
+
+        if(PlayerOne.health <= 0 || PlayerTwo.health <= 0)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
         if (timer < 1)
         {
@@ -65,7 +72,18 @@ public class ExcitementBar : MonoBehaviour
             PlayerTwo.health += 4;
 
         if (gameTime <= 40 && gameTime >= 39)
-            interestDecrease += 2;
+            interestDecrease++;
+
+        if (Mathf.Abs(PlayerTwo.health - PlayerOne.health) < 15 || Mathf.Abs(PlayerTwo.health - PlayerOne.health) > 60)
+            excitementVal += 2;
+    }
+
+
+    private void finalEval() { 
+        if(excitementVal < 50)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        else
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
     
 }
