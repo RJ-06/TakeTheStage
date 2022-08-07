@@ -27,6 +27,8 @@ public class PlayerTwo : MonoBehaviour
     [SerializeField] float healTime;
     private float healTimer = 0;
 
+    public Animator animator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -54,9 +56,9 @@ public class PlayerTwo : MonoBehaviour
 
         guarding = Input.GetKey(KeyCode.DownArrow) && isGrounded;
         healTimer += Time.deltaTime;
-        if (healTimer > healTime && health < 100)
+        if (healTimer > healTime && health <= 95 && ExcitementBar.timer >= 1)
         {
-            health += (int)Time.deltaTime*7;
+            health += 5;
         }
 
     }
@@ -68,6 +70,8 @@ public class PlayerTwo : MonoBehaviour
         //checks if you're touching the ground
 
         float moveInput = Input.GetAxisRaw("p2Horizontal");
+
+        animator.SetFloat("speed", Mathf.Abs(moveInput));
 
         if (!guarding)
         {
@@ -98,8 +102,8 @@ public class PlayerTwo : MonoBehaviour
     void attack()
     {
         GameObject tempSword = Instantiate(sword, swordPos);
-        Destroy(tempSword, .3f);
-        attackWaitTime = .45f;
+        Destroy(tempSword, .2f);
+        attackWaitTime = .3f;
     }
 
 
@@ -108,12 +112,12 @@ public class PlayerTwo : MonoBehaviour
         if (col.gameObject.tag == "p1Sword")
         {
             health -= 10;
-            healTime = 0;
-            ExcitementBar.excitementVal += 7;
+            healTimer = 0;
+            ExcitementBar.excitementVal += 4;
 
             if (rb.velocity.y < -7)
             {
-                ExcitementBar.excitementVal += 25;
+                ExcitementBar.excitementVal += 15;
             }
 
             rb.AddForce(new Vector2(4500 * Mathf.Sign(this.transform.position.x - col.transform.position.x) ,350));
