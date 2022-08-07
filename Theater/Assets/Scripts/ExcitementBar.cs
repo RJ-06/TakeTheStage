@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExcitementBar : MonoBehaviour
 {
-    public static float excitementVal = 0;
+    public static float excitementVal = 25;
 
     [SerializeField] PlayerOne p1;
     [SerializeField] PlayerTwo p2;
@@ -22,6 +22,8 @@ public class ExcitementBar : MonoBehaviour
 
         if (excitementVal > maxVal)
             excitementVal = maxVal;
+        if (excitementVal < 0)
+            excitementVal = 0;
 
         if (timer < 1)
         {
@@ -52,7 +54,8 @@ public class ExcitementBar : MonoBehaviour
         else if (PlayerTwo.health < 40)
             excitementVal += 1;
 
-
+        PlayerOne.health += 3;
+        PlayerTwo.health += 3;
        
 
     }

@@ -24,9 +24,6 @@ public class PlayerTwo : MonoBehaviour
     [SerializeField] float attackWaitTime = .45f;
     public bool guarding;
 
-    [SerializeField] float healTime;
-    private float healTimer = 0;
-
     public Animator animator;
 
     void Start()
@@ -55,11 +52,6 @@ public class PlayerTwo : MonoBehaviour
 
 
         guarding = Input.GetKey(KeyCode.DownArrow) && isGrounded;
-        healTimer += Time.deltaTime;
-        if (healTimer > healTime && health <= 95 && ExcitementBar.timer >= 1)
-        {
-            health += 5;
-        }
 
     }
 
@@ -112,7 +104,6 @@ public class PlayerTwo : MonoBehaviour
         if (col.gameObject.tag == "p1Sword")
         {
             health -= 10;
-            healTimer = 0;
             ExcitementBar.excitementVal += 4;
 
             if (rb.velocity.y < -7)
