@@ -21,7 +21,7 @@ public class PlayerTwo : MonoBehaviour
     public GameObject sword;
     public static int health = 100;
     [SerializeField] Transform swordPos;
-    [SerializeField] float attackWaitTime = .45f;
+    [SerializeField] float attackWaitTime = .4f;
     public bool guarding;
 
     public Animator animator;
@@ -52,6 +52,9 @@ public class PlayerTwo : MonoBehaviour
 
 
         guarding = Input.GetKey(KeyCode.DownArrow) && isGrounded;
+
+        if (health < 0)
+            health = 0;
 
     }
 
@@ -95,7 +98,7 @@ public class PlayerTwo : MonoBehaviour
     {
         GameObject tempSword = Instantiate(sword, swordPos);
         Destroy(tempSword, .2f);
-        attackWaitTime = .3f;
+        attackWaitTime = .4f;
     }
 
 

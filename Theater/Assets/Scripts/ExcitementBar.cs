@@ -11,6 +11,9 @@ public class ExcitementBar : MonoBehaviour
 
     [SerializeField] float maxVal;
 
+    [SerializeField] float interestDecrease;
+    public float gameTime = 83;
+
     public static float timer = 0;
 
     // Update is called once per frame
@@ -19,6 +22,8 @@ public class ExcitementBar : MonoBehaviour
     {
         timer += Time.deltaTime;
         Debug.Log("p1 health: " + PlayerOne.health + " p2 health: " + PlayerTwo.health + " excitement: " + excitementVal + " Timer: " + timer);
+
+        gameTime -= Time.deltaTime;
 
         if (excitementVal > maxVal)
             excitementVal = maxVal;
@@ -33,31 +38,34 @@ public class ExcitementBar : MonoBehaviour
             timer = 0;
         }
 
-        excitementVal -= 4;
+        excitementVal -= interestDecrease;
 
-        if(p1.rb.velocity.x == 0 && p2.rb.velocity.x == 0)
+        if(p1.rb.velocity.x == 0 || p2.rb.velocity.x == 0)
         {
             excitementVal -= .5f;
         }
 
         if (PlayerOne.health < 10)
-            excitementVal += 5;
+            excitementVal += 2f;
         else if (PlayerOne.health < 20)
-            excitementVal += 3;
+            excitementVal += 1f;
         else if (PlayerOne.health < 40)
-            excitementVal += 1;
+            excitementVal += .5f;
 
         if (PlayerTwo.health < 10)
-            excitementVal += 5;
+            excitementVal += 2f;
         else if (PlayerTwo.health < 20)
-            excitementVal += 3;
+            excitementVal += 1f;
         else if (PlayerTwo.health < 40)
-            excitementVal += 1;
+            excitementVal += .5f;
 
-        PlayerOne.health += 3;
-        PlayerTwo.health += 3;
-       
+        if (PlayerOne.health < 98)
+            PlayerOne.health += 4;
+        if(PlayerTwo.health < 98)
+            PlayerTwo.health += 4;
 
+        if (gameTime <= 40 && gameTime >= 39)
+            interestDecrease += 2;
     }
     
 }
