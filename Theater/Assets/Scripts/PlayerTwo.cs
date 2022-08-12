@@ -107,7 +107,7 @@ public class PlayerTwo : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "p1Sword")
+        if (col.gameObject.tag == "p1Sword" && !guarding)
         {
             health -= 10;
             ExcitementBar.excitementVal += 4;
