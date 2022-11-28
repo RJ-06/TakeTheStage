@@ -15,27 +15,26 @@ public class ExcitementBar : MonoBehaviour
     [SerializeField] float interestDecrease;
     public float gameTime = 84;
 
+
+    //used to make the update method run once every second maaaybe i should make that somehing reasonable rather than using this weird setup
     public static float timer = 0;
 
     // Update is called once per frame
 
     void Update()
     {
-        timer += Time.deltaTime;
-        Debug.Log("p1 health: " + PlayerOne.health + " p2 health: " + PlayerTwo.health + " excitement: " + excitementVal + " Timer: " + timer);
 
+        Debug.Log("p1 health: " + PlayerOne.health + " p2 health: " + PlayerTwo.health + " excitement: " + excitementVal + " Timer: " + gameTime);
+
+        timer += Time.deltaTime;
         gameTime -= Time.deltaTime;
 
         if (excitementVal > maxVal)
             excitementVal = maxVal;
-        if (excitementVal < 0)
-            excitementVal = 0;
 
-        if (timer <= 0)
+        if (gameTime <= 0 || excitementVal <= 0 || PlayerOne.health <= 0 || PlayerTwo.health <= 0)
             finalEval();
 
-        if(PlayerOne.health <= 0 || PlayerTwo.health <= 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
         if (timer < 1)
         {
@@ -71,7 +70,7 @@ public class ExcitementBar : MonoBehaviour
         if(PlayerTwo.health < 98)
             PlayerTwo.health += 4;
 
-        if (gameTime <= 40 && gameTime >= 39)
+        if ((int)gameTime == 40)
             interestDecrease++;
 
         if (Mathf.Abs(PlayerTwo.health - PlayerOne.health) < 15 || Mathf.Abs(PlayerTwo.health - PlayerOne.health) > 60)
@@ -80,7 +79,7 @@ public class ExcitementBar : MonoBehaviour
 
 
     private void finalEval() { 
-        if(excitementVal < 50)
+        if(excitementVal < 50 || PlayerOne.health < 0 && PlayerTwo.health < 0)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         else
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
